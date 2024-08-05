@@ -41,7 +41,7 @@ namespace IPA.ModList.BeatSaber.UI
             this.menuTransitionsHelper = menuTransitionsHelper;
         }
 
-        protected override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
+        public override void DidActivate(bool firstActivation, bool addedToHierarchy, bool screenSystemEnabling)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace IPA.ModList.BeatSaber.UI
             modControlsViewController.PresentFloatingScreen();
         }
 
-        protected override void DidDeactivate(bool removedFromHierarchy, bool screenSystemDisabling)
+        public override void DidDeactivate(bool removedFromHierarchy, bool screenSystemDisabling)
         {
             modControlsViewController.OnChangeNeedsConfirmation -= modalPopupViewController.QueueChange;
             modControlsViewController.OnListNeedsRefresh -= HandleListNeedsRefresh;
@@ -97,7 +97,7 @@ namespace IPA.ModList.BeatSaber.UI
             modListViewController.ReloadViewList();
         }
 
-        protected override void BackButtonWasPressed(ViewController viewController)
+        public override void BackButtonWasPressed(ViewController viewController)
         {
             // If there is a change pending (and modal open) we have to deny it
             // If we don't, the change will remain pending when dismissing the view and coming back

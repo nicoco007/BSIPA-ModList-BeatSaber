@@ -1,15 +1,13 @@
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using BeatSaberMarkupLanguage;
+using System.Threading.Tasks;
 using BeatSaberMarkupLanguage.Components;
 using BeatSaberMarkupLanguage.Tags;
 using HMUI;
 using IPA.Loader;
-using IPA.ModList.BeatSaber.UI.ViewControllers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -121,7 +119,7 @@ namespace IPA.ModList.BeatSaber.Utilities
 
         private static readonly ConcurrentQueue<Action> iconQueue = new();
 
-        public static Sprite QueueReadPluginIcon(this PluginMetadata plugin, Action<Sprite> OnCompletion)
+        public static Sprite QueueReadPluginIcon(this PluginMetadata plugin, Action<Sprite> onCompletion)
         {
             if (plugin.IsBare)
             {
@@ -136,19 +134,18 @@ namespace IPA.ModList.BeatSaber.Utilities
                     icon = ReadImageFromAssembly(plugin.Assembly, plugin.IconName).AsSprite();
                 }
 
-                OnCompletion?.Invoke(icon != null ? icon : DefaultPluginIcon);
+                onCompletion?.Invoke(icon != null ? icon : DefaultPluginIcon);
             });
 
-            _ = SharedCoroutineStarter.instance.StartCoroutine(IconLoadCoroutine());
+            IconLoadCoroutine().ContinueWith((task) => Plugin.Logger?.Error(task.Exception), TaskContinuationOptions.OnlyOnFaulted);
             return BSMLUtils.ImageResources.BlankSprite;
         }
 
-        private static readonly YieldInstruction loadWait = new WaitForEndOfFrame();
-        private static IEnumerator IconLoadCoroutine()
+        private static async Task IconLoadCoroutine()
         {
             while (iconQueue.TryDequeue(out var loader))
             {
-                yield return loadWait;
+                await Task.Yield();
                 loader?.Invoke();
             }
         }
@@ -171,11 +168,10 @@ namespace IPA.ModList.BeatSaber.Utilities
             return asset;
         }
 
-        public static IEnumerable<T> SingleEnumerable<T>(T item) => Enumerable.Empty<T>().Append(item);
-
-        public static IEnumerable<T?> AsNullable<T>(this IEnumerable<T> items) where T : struct => items.Select(i => new T?(i));
-
-        public static T? AsNullable<T>(this T item) where T : struct => item;
+        public static IEnumerable<T> SingleEnumerable<T>(T item)
+        {
+            yield return item;
+        }
 
         public static void Zero(RectTransform transform)
         {

@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using BeatSaberMarkupLanguage;
 using HMUI;
 using IPA.ModList.BeatSaber.UI.Markdig;
@@ -238,9 +237,8 @@ namespace IPA.ModList.BeatSaber.UI.Components
             if (url is null)
                 return; // if there isn't a url, don't render anything
 
-            _ = fullBgGO.AddComponent<LinkHoverHint>();
+            BeatSaberUI.DiContainer.InstantiateComponent<LinkHoverHint>(fullBgGO);
             var hoverManager = fullBgGO.AddComponent<LinkHoverManager>();
-            hoverManager.HoverHint.Controller = Resources.FindObjectsOfTypeAll<HoverHintController>().First();
             hoverManager.MarkdownText = this;
             hoverManager.TitleText = title;
             hoverManager.Url = url;
@@ -261,7 +259,7 @@ namespace IPA.ModList.BeatSaber.UI.Components
         {
             public LinkHoverHint HoverHint => GetComponent<LinkHoverHint>();
 
-            public HoverHintController HintController => HoverHint.Controller;
+            public HoverHintController HintController => HoverHint._hoverHintController;
 
             public string? TitleText { get; set; }
             public string Url { get; set; } = "";
@@ -273,7 +271,7 @@ namespace IPA.ModList.BeatSaber.UI.Components
                 {
                     var hint = HoverHint;
                     hint.text = TitleText;
-                    hint.Controller.ShowHint(hint);
+                    hint._hoverHintController.ShowHint(hint);
                 }
             }
 
@@ -314,12 +312,6 @@ namespace IPA.ModList.BeatSaber.UI.Components
 
         private class LinkHoverHint : HoverHint
         {
-            public HoverHintController Controller
-            {
-                get => _hoverHintController;
-                set => this.SetField<HoverHint, HoverHintController>(nameof(_hoverHintController), value);
-            }
-
             internal void Start()
                 => enabled = false; // always force
 

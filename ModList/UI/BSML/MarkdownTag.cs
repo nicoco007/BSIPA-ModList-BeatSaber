@@ -1,7 +1,7 @@
-﻿using BeatSaberMarkupLanguage;
+using System;
+using BeatSaberMarkupLanguage;
 using BeatSaberMarkupLanguage.Tags;
 using IPA.ModList.BeatSaber.UI.Components;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
