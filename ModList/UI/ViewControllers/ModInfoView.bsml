@@ -3,7 +3,7 @@
 
     <stack anchor-max-x="0.5">
         <vertical child-align="MiddleCenter" child-control-height="true" child-expand-height="false" active="~show-select-plugin-text">
-            <text text="Please select a mod first" font-size="8" word-wrapping="true"/>
+            <text text="Select a mod" font-size="8" word-wrapping="true"/>
         </vertical>
         <vertical spacing="2" child-align="UpperLeft" child-control-height="true" child-expand-height="false" preferred-width="80" active="~plugin-selected">
             <horizontal
