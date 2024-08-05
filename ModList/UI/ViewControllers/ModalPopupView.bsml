@@ -1,5 +1,5 @@
 ﻿<modal xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-       xsi:noNamespaceSchemaLocation='https://raw.githubusercontent.com/monkeymanboy/BSML-Docs/gh-pages/BSMLSchema.xsd'
+       xsi:noNamespaceSchemaLocation='https://monkeymanboy.github.io/BSML-Docs/BSMLSchema.xsd'
        id='change-modal'
        size-delta-x='70'
        size-delta-y='50'
