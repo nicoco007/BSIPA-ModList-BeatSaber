@@ -21,8 +21,6 @@ namespace IPA.ModList.BeatSaber.Utilities
 
         public static Sprite? DefaultPluginIcon { get; private set; }
 
-        public static Sprite? LegacyPluginIcon { get; private set; }
-
         public static Sprite? LibraryIcon { get; private set; }
 
         public static Sprite? XSprite  { get; private set; }
@@ -31,11 +29,7 @@ namespace IPA.ModList.BeatSaber.Utilities
 
         public static Sprite? WarnSprite { get; private set; }
 
-        public static Sprite? RoundedBackgroundSprite { get; private set; }
-
         public static Sprite? SmallRoundedRectSprite { get; private set; }
-
-        public static Sprite? SmallRoundedRectFlatSprite { get; private set; }
 
         public static Sprite? TinyRoundedRectSprite { get; private set; }
 
@@ -45,24 +39,21 @@ namespace IPA.ModList.BeatSaber.Utilities
 
         public static async Task LoadResourcesAsync(Assembly assembly)
         {
-            DefaultPluginIcon = await BSMLUtils.LoadSpriteFromAssemblyAsync(assembly, ResourcePrefix + "mod_bsipa.png");
-            LegacyPluginIcon = await BSMLUtils.LoadSpriteFromAssemblyAsync(assembly, ResourcePrefix + "mod_ipa.png");
+            DefaultPluginIcon = await BSMLUtils.LoadSpriteFromAssemblyAsync(assembly, ResourcePrefix + "plugin.png");
             LibraryIcon = await BSMLUtils.LoadSpriteFromAssemblyAsync(assembly, ResourcePrefix + "library.png");
             XSprite = await BSMLUtils.LoadSpriteFromAssemblyAsync(assembly, ResourcePrefix + "x.png");
             OSprite = await BSMLUtils.LoadSpriteFromAssemblyAsync(assembly, ResourcePrefix + "o.png");
             WarnSprite = await BSMLUtils.LoadSpriteFromAssemblyAsync(assembly, ResourcePrefix + "!.png");
-            SmallRoundedRectSprite = await LoadSmallRoundedRectSprite(assembly, false);
-            SmallRoundedRectFlatSprite = await LoadSmallRoundedRectSprite(assembly, true);
+            SmallRoundedRectSprite = await LoadSmallRoundedRectSprite(assembly);
             TinyRoundedRectSprite = await LoadTinyRoundedRectSprite(assembly);
-            RoundedBackgroundSprite = Resources.FindObjectsOfTypeAll<Sprite>().First(s => s.name == "RoundRectPanel");
         }
 
-        private static async Task<Sprite> LoadSmallRoundedRectSprite(Assembly assembly, bool flatBottom = false)
+        private static async Task<Sprite> LoadSmallRoundedRectSprite(Assembly assembly)
         {
             var tex = await BSMLUtils.LoadTextureFromAssemblyAsync(assembly, ResourcePrefix + "small-rounded-rect.png")!;
-            return Sprite.Create(tex, new Rect(0, (flatBottom ? 32 : 0), tex.width, tex.height - (flatBottom ? 32 : 0)),
+            return Sprite.Create(tex, new Rect(0, 0, tex.width, tex.height),
                 pivot: Vector2.zero,
-                border: new Vector4(32, flatBottom ? 1 : 32, 32, 32),
+                border: new Vector4(32, 32, 32, 32),
                 pixelsPerUnit: 100f,
                 extrude: 0,
                 meshType: SpriteMeshType.FullRect);
