@@ -11,7 +11,6 @@ using IPA.Loader;
 using IPA.Utilities.Async;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using BSMLUtils = BeatSaberMarkupLanguage.Utilities;
 
 namespace IPA.ModList.BeatSaber.Utilities
@@ -42,7 +41,7 @@ namespace IPA.ModList.BeatSaber.Utilities
 
         public static HMUI.Screen MainScreen => BeatSaberUI.DiContainer.Resolve<HierarchyManager>()._screenSystem.mainScreen;
 
-        public static TextTag TextTag { get; } = new TextTag(); 
+        public static TextTag TextTag { get; } = new TextTag();
 
         public static async Task LoadResourcesAsync(Assembly assembly)
         {
@@ -55,7 +54,7 @@ namespace IPA.ModList.BeatSaber.Utilities
             SmallRoundedRectSprite = await LoadSmallRoundedRectSprite(assembly, false);
             SmallRoundedRectFlatSprite = await LoadSmallRoundedRectSprite(assembly, true);
             TinyRoundedRectSprite = await LoadTinyRoundedRectSprite(assembly);
-            RoundedBackgroundSprite = Resources.FindObjectsOfTypeAll<Image>().Last(i => i.gameObject.name == "MinScoreInfo" && i.sprite != null && i.sprite.name == "RoundRectPanel").sprite;
+            RoundedBackgroundSprite = Resources.FindObjectsOfTypeAll<Sprite>().First(s => s.name == "RoundRectPanel");
         }
 
         private static async Task<Sprite> LoadSmallRoundedRectSprite(Assembly assembly, bool flatBottom = false)
