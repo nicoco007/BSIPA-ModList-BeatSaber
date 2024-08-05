@@ -1,11 +1,14 @@
+using System.Reflection;
+using System.Threading.Tasks;
 using IPA.Config.Stores;
 using IPA.Logging;
 using IPA.ModList.BeatSaber.Installers;
+using IPA.ModList.BeatSaber.Utilities;
 using SiraUtil.Zenject;
 
 namespace IPA.ModList.BeatSaber
 {
-    [Plugin(RuntimeOptions.DynamicInit), NoEnableDisable]
+    [Plugin(RuntimeOptions.DynamicInit)]
     public class Plugin
     {
         internal static Logger? Logger { get; private set; }
@@ -21,6 +24,12 @@ namespace IPA.ModList.BeatSaber
 
             zenject.Install<MLAppInstaller>(Location.App, ModListConfig.Instance);
             zenject.Install<MLMenuInstaller>(Location.Menu);
+        }
+
+        [OnEnable]
+        public void OnEnable()
+        {
+            Helpers.LoadResourcesAsync(Assembly.GetExecutingAssembly()).ContinueWith((task) => Logger?.Error(task.Exception), TaskContinuationOptions.OnlyOnFaulted);
         }
     }
 }

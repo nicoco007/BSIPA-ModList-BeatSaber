@@ -15,7 +15,7 @@ namespace IPA.ModList.BeatSaber.Models
         public string Name;
         public string AuthorAndVersion;
         public Sprite? IconSprite;
-        public List<Sprite> StatusSprites;
+        public List<Sprite?> StatusSprites;
 
         [UIComponent("IconImage")]
         internal ImageView IconImage = null!;
@@ -38,14 +38,14 @@ namespace IPA.ModList.BeatSaber.Models
             IconSprite = pluginInformation.Icon;
             Name = pluginInformation.Plugin.Name;
             AuthorAndVersion = $"{pluginInformation.Plugin.Author} <size=80%>{pluginInformation.Plugin.HVersion}</size>";
-            StatusSprites = Enumerable.Empty<Sprite>()
-                        .AppendIf(pluginInformation.Plugin.IsBare, Helpers.LibrarySprite)
+            StatusSprites = Enumerable.Empty<Sprite?>()
+                        .AppendIf(pluginInformation.Plugin.IsBare, Helpers.LibraryIcon)
                         .AppendIf(pluginInformation.State == PluginState.Disabled, Helpers.XSprite)
                         .AppendIf(pluginInformation.State == PluginState.Enabled && pluginInformation.Plugin.RuntimeOptions == RuntimeOptions.DynamicInit, Helpers.OSprite)
                         .AppendIf(pluginInformation.State == PluginState.Ignored, Helpers.WarnSprite).ToList();
         }
 
-        private void OnSpriteLoaded(Sprite iconSprite)
+        private void OnSpriteLoaded(Sprite? iconSprite)
         {
             pluginInformation.SpriteLoadedEvent -= OnSpriteLoaded;
             IconSprite = iconSprite;

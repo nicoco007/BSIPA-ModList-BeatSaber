@@ -9,11 +9,11 @@ namespace IPA.ModList.BeatSaber.Models
     {
         private Sprite? icon;
         public bool SpriteWasLoaded { get; private set; }
-        public event Action<Sprite>? SpriteLoadedEvent;
+        public event Action<Sprite?>? SpriteLoadedEvent;
         public PluginMetadata Plugin { get; }
         public PluginState State { get; set; }
 
-        public Sprite Icon
+        public Sprite? Icon
         {
             get
             {
@@ -22,7 +22,7 @@ namespace IPA.ModList.BeatSaber.Models
                     return icon;
                 }
 
-                return Plugin.QueueReadPluginIcon((Sprite icon) =>
+                return Plugin.QueueReadPluginIcon((Sprite? icon) =>
                 {
                     this.icon = icon;
                     SpriteWasLoaded = true;

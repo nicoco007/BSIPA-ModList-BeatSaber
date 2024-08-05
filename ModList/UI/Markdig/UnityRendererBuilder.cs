@@ -44,14 +44,14 @@ namespace IPA.ModList.BeatSaber.UI.Markdig
 
         public interface IQuoteRendererBuilder
         {
-            UnityRendererBuilder UseBackground(Sprite bg, Image.Type type);
+            UnityRendererBuilder UseBackground(Sprite? bg, Image.Type type);
             UnityRendererBuilder UseColor(Color col);
             UnityRendererBuilder Builder { get; }
         }
 
         public interface ICodeRendererBuilder
         {
-            UnityRendererBuilder UseBackground(Sprite bg, Image.Type type);
+            UnityRendererBuilder UseBackground(Sprite? bg, Image.Type type);
             UnityRendererBuilder UseColor(Color col);
             UnityRendererBuilder UseFont(TMP_FontAsset font);
             IInlineCodeRendererBuilder Inline { get; }
@@ -60,7 +60,7 @@ namespace IPA.ModList.BeatSaber.UI.Markdig
 
         public interface IInlineCodeRendererBuilder
         {
-            UnityRendererBuilder UseBackground(Sprite bg, Image.Type type);
+            UnityRendererBuilder UseBackground(Sprite? bg, Image.Type type);
             UnityRendererBuilder UseColor(Color col);
             UnityRendererBuilder UsePadding(string padding);
             UnityRendererBuilder Builder { get; }
@@ -146,7 +146,7 @@ namespace IPA.ModList.BeatSaber.UI.Markdig
 
         UnityRendererBuilder IQuoteRendererBuilder.UseColor(Color col) => Do(quoteColor = col);
 
-        UnityRendererBuilder IQuoteRendererBuilder.UseBackground(Sprite bg, Image.Type type)
+        UnityRendererBuilder IQuoteRendererBuilder.UseBackground(Sprite? bg, Image.Type type)
         {
             quoteBg = bg;
             quoteBgType = type;
@@ -155,7 +155,7 @@ namespace IPA.ModList.BeatSaber.UI.Markdig
 
         UnityRendererBuilder ICodeRendererBuilder.UseColor(Color col) => Do(codeColor = col);
 
-        UnityRendererBuilder ICodeRendererBuilder.UseBackground(Sprite bg, Image.Type type)
+        UnityRendererBuilder ICodeRendererBuilder.UseBackground(Sprite? bg, Image.Type type)
         {
             codeBg = bg;
             codeBgType = type;
@@ -164,7 +164,7 @@ namespace IPA.ModList.BeatSaber.UI.Markdig
 
         UnityRendererBuilder ICodeRendererBuilder.UseFont(TMP_FontAsset font) => Do(codeFont = font);
 
-        UnityRendererBuilder IInlineCodeRendererBuilder.UseBackground(Sprite bg, Image.Type type)
+        UnityRendererBuilder IInlineCodeRendererBuilder.UseBackground(Sprite? bg, Image.Type type)
         {
             codeInlineBg = bg;
             codeInlineBgType = type;
